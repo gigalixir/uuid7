@@ -1,0 +1,17 @@
+FROM ubuntu:20.04
+
+RUN apt update -y && \
+  apt install -y wget && \
+  wget https://go.dev/dl/go1.21.4.linux-amd64.tar.gz && \
+  tar -C /usr/local -xzf go1.21.4.linux-amd64.tar.gz && \
+  rm -f go1.21.4.linux-amd64.tar.gz
+
+ENV PATH=${PATH}:/usr/local/go/bin
+
+WORKDIR /app
+
+VOLUME /app
+
+ENV GOOS=linux GOARCH=amd64
+
+CMD [ "go", "build", "-buildvcs=false", "-o", "uuid7" ]
